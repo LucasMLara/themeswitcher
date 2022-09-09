@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import usePersistedTheme from './utils/usePersistedTheme'
+import Header from './Components/Header';
+import {ThemeProvider, DefaultTheme} from 'styled-components'
+
+import darkTheme from './Styles/dark';
+import lightTheme from './Styles/light';
 function App() {
+  const [theme, setTheme] = usePersistedTheme<DefaultTheme>('light', lightTheme)
+
+  const handleTheme = () =>{    
+    setTheme(theme.name === 'light' ? darkTheme : lightTheme)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <ThemeProvider theme={theme}>
+      <Header changeTheme={handleTheme} name='testando'/>
+    </ThemeProvider>
+    </>
   );
 }
 
